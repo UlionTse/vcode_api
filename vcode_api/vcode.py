@@ -55,12 +55,12 @@ def generate(number=4,bgSize=(200,80),font=None,colorAll=('white','blue','red'),
     if showImg: image.show()
     if not saveDirPath:
         image.save('vcode.png')
-        return 'Save OK! \nsaveDirPath: {}'.format(os.getcwd())
+        print('Save OK! \nsaveDirPath: {}'.format(os.getcwd()))
     else:
         try:
             image.save(saveDirPath + r'/vcode.png')
         except:
             image.save(saveDirPath + r'\\vcode.png')
         finally:
-            return 'Save OK! \nsaveDirPath: {}'.format(saveDirPath)
+            print('Save OK! \nsaveDirPath: {}'.format(saveDirPath))
 
