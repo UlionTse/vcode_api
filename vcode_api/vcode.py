@@ -3,9 +3,8 @@
 
 import os
 import string
-import random
-import numpy
-from random import randint
+import numpy as np
+from random import randint,sample
 
 try:
     from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -16,9 +15,9 @@ except ImportError:
 def generate(number=4,bgSize=(200,80),font=None,colorAll=('white','blue','red'),pool=None,
                drawLine=True,foggy=True,saveDirPath=None,showImg=True):
     '''
-    :param number: int,random.sample(pool, number)
+    :param number: int,
     :param bgSize: tuple,backgroundSize(width,height). The `height` affects `fontSize` & `lineWidth`.
-    :param font: str,Default font 'arial'. Windows :file:`C:\...\arial.ttf` directory.
+    :param font: str,Default font 'arial'. Windows :file:`C:\fontPath\arial.ttf` directory.
     :param colorAll: tuple,(bgColor,fontColor,lineColor)
     :param pool: set,random.sample(set(pool), number)
     :param drawLine: boolean,
@@ -30,19 +29,14 @@ def generate(number=4,bgSize=(200,80),font=None,colorAll=('white','blue','red'),
 
     if not font: font = r'arial.ttf'
     if not pool: pool = list(string.ascii_letters) + [str(x) for x in range(10)]
-    text = ''.join(random.sample(set(pool), number))
+    text = ''.join(sample(set(pool), number))
     font = ImageFont.truetype(font,bgSize[1])
 
     if not foggy:
         image = Image.new(mode='RGBA', size=bgSize, color=colorAll[0])
     else:
-        rawArray = numpy.zeros((bgSize[1],bgSize[0], 3), dtype=numpy.uint8)
-        sh = rawArray.shape
-        for i in range(sh[0]):
-            for j in range(sh[1]):
-                for k in range(sh[2]):
-                    rawArray[i][j][k] = random.randint(0, 255)
-        image = Image.fromarray(rawArray)
+        fogArray = np.random.randint(0,255,size=(bgSize[1],bgSize[0],3),dtype=np.uint8)
+        image = Image.fromarray(fogArray)
 
     draw = ImageDraw.Draw(image)
     textInd = ((bgSize[0]-font.getsize(text)[0])/2,(bgSize[1]-font.getsize(text)[1])/2)
