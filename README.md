@@ -13,6 +13,6 @@
 
 - *Tips:*
 ```python
-generate(number=4, bgSize=(200, 80), font=None, colorAll=('white', 'blue', 'red'), pool=None, 
-         drawLine=True, foggy=True,saveDirPath=None, showImg=True)
+generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=True,foggy=True,
+         saveDirPath=None,showImg=True)
 ```

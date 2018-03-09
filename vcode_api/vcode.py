@@ -12,23 +12,25 @@ except ImportError:
     import Image, ImageDraw, ImageFilter, ImageFont
 
 
-def generate(number=4,bgSize=(200,80),font=None,colorAll=('white','blue','red'),pool=None,
-               drawLine=True,foggy=True,saveDirPath=None,showImg=True):
+def generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=True,foggy=True,
+             saveDirPath=None,showImg=True):
     '''
     :param number: int,
     :param bgSize: tuple,backgroundSize(width,height). The `height` affects `fontSize` & `lineWidth`.
     :param font: str,Default font 'arial'. Windows :file:`C:\fontPath\arial.ttf` directory.
-    :param colorAll: tuple,(bgColor,fontColor,lineColor)
-    :param pool: set,random.sample(set(pool), number)
+    :param colorAll: tuple,(bgColor,fontColor,lineColor). Default colorAll=('white','blue','red').
+    :param pool: set, Default {[A-Za-z0-9]}
     :param drawLine: boolean,
     :param foggy: boolean,
-    :param saveDirPath: str,
+    :param saveDirPath: str, Default `os.getcwd()`
     :param showImg: boolean,
     :return:
     '''
 
-    if not font: font = r'arial.ttf'
-    if not pool: pool = list(string.ascii_letters) + [str(x) for x in range(10)]
+    bgSize = bgSize or (200,80)
+    font = font or r'arial.ttf'
+    colorAll = colorAll or ('white','blue','red')
+    pool = pool or list(string.ascii_letters) + [str(x) for x in range(10)]
     text = ''.join(sample(set(pool), number))
     font = ImageFont.truetype(font,bgSize[1])
 
@@ -41,10 +43,12 @@ def generate(number=4,bgSize=(200,80),font=None,colorAll=('white','blue','red'),
     draw = ImageDraw.Draw(image)
     textInd = ((bgSize[0]-font.getsize(text)[0])/2,(bgSize[1]-font.getsize(text)[1])/2)
     draw.text(xy=textInd,text=text,font=font,fill=colorAll[1])
+
     if drawLine:
         lineInd = [(textInd[0],randint(int(textInd[1]+1),bgSize[1]-int(textInd[1]-1))),
                     (bgSize[0]-textInd[0],randint(int(textInd[1]+1),bgSize[1]-int(textInd[1]-1)))]
         draw.line(xy=lineInd,fill=colorAll[2],width=int(bgSize[1]//10))
+
     image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
     if showImg: image.show()
     if not saveDirPath:

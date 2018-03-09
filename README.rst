@@ -4,9 +4,10 @@
 *Usage:*
 --------
 
->>>from vcode_api import vcode
 
->>>vcode.generate()
+>>> from vcode_api import vcode
+
+>>> vcode.generate()
 
 'Save OK!'
 
