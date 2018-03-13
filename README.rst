@@ -7,7 +7,11 @@
 
 >>> from vcode_api import vcode
 
->>> vcode.generate()
+>>> text = vcode.generate()
 
 'Save OK!'
+
+>>> print(text)
+
+'p7YW'
 

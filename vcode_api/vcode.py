@@ -13,7 +13,7 @@ except ImportError:
 
 
 def generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=True,foggy=True,
-             saveDirPath=None,showImg=True):
+             saveDirPath=None,showImg=True,returnText=True):
     '''
     :param number: int,
     :param bgSize: tuple,backgroundSize(width,height). The `height` affects `fontSize` & `lineWidth`.
@@ -24,7 +24,8 @@ def generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=Tru
     :param foggy: boolean,
     :param saveDirPath: str, Default `os.getcwd()`
     :param showImg: boolean,
-    :return:
+    :param returnText: boolean,
+    :return: None or str
     '''
 
     bgSize = bgSize or (200,80)
@@ -56,9 +57,11 @@ def generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=Tru
         print('Save OK! \nsaveDirPath: {}'.format(os.getcwd()))
     else:
         try:
-            image.save(saveDirPath + r'/vcode.png')
+            image.save(saveDirPath + r'/vcode_{}.png'.format(text))
         except:
-            image.save(saveDirPath + r'\\vcode.png')
+            image.save(saveDirPath + r'\\vcode_{}.png'.format(text))
         finally:
             print('Save OK! \nsaveDirPath: {}'.format(saveDirPath))
+
+    return text if returnText else None
 
