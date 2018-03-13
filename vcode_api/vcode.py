@@ -53,15 +53,11 @@ def generate(number=4,bgSize=None,font=None,colorAll=None,pool=None,drawLine=Tru
     image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
     if showImg: image.show()
     if not saveDirPath:
-        image.save('vcode.png')
+        image.save('vcode_{}.png'.format(text))
         print('Save OK! \nsaveDirPath: {}'.format(os.getcwd()))
     else:
-        try:
-            image.save(saveDirPath + r'/vcode_{}.png'.format(text))
-        except:
-            image.save(saveDirPath + r'\\vcode_{}.png'.format(text))
-        finally:
-            print('Save OK! \nsaveDirPath: {}'.format(saveDirPath))
+        image.save(saveDirPath + '/vcode_{}.png'.format(text))
+        print('Save OK! \nsaveDirPath: {}'.format(saveDirPath))
 
     return text if returnText else None
 
